@@ -14,10 +14,7 @@ namespace My_Library
     public partial class F_Login : Form
     {
         private byte passwordMinimunSize { get; set; } = 5;
-        public F_Login()
-        {
-            InitializeComponent();
-        }
+        public F_Login() => InitializeComponent();        
 
         private void F_Login_Load(object sender, EventArgs e)
         {
@@ -58,20 +55,17 @@ namespace My_Library
             }
         }
 
-        private void tb_cpf_TextChanged(object sender, EventArgs e)
-        {
+        private void tb_cpf_TextChanged(object sender, EventArgs e) =>
             activateLoginButton();
-        }
+        
 
-        private void tb_senha_TextChanged(object sender, EventArgs e)
-        {
+        private void tb_senha_TextChanged(object sender, EventArgs e) =>  
             activateLoginButton();
-        }
+        
 
-        private void activateLoginButton()
-        {
-            btn_login.Enabled = tb_cpf.TextLength <= 10 || tb_senha.TextLength <= passwordMinimunSize ? false : true;
-        }
+        private void activateLoginButton() =>      
+            btn_login.Enabled = tb_cpf.TextLength > 10 && tb_senha.TextLength > passwordMinimunSize;
+        
 
         private void refreshFields()
         {
@@ -96,8 +90,6 @@ namespace My_Library
             Database.dml(query, "OK", "Erro: ");
 
             refreshFields();
-
-            // 050.186.370-21 tiago18555
         }
     }
 }

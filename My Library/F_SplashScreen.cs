@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace My_Library
             pb_load.Value = 100;
             
             load.Interval = 100;
+            loadForfeitConfigs();
+            loadThemeData();
             load.Start();
         }
         private void goToLogin(object obj)
@@ -62,5 +65,29 @@ namespace My_Library
         {
 
         }
-    }
+		public void loadThemeData()
+		{
+
+		}
+        public void loadForfeitConfigs()
+		{
+            string select = String.Format(@"
+                SELECT * FROM tb_configs
+                WHERE cd_configuracao = (SELECT MAX(cd_configuracao) FROM tb_configs)
+            ");
+            DataTable dt = Database.dql(select);
+            Globals.id_config = dt.Rows[0].Field<long?>("cd_configuracao");
+            Globals.value = dt.Rows[0].Field<decimal?>("vl_multa");
+            Globals.allowence = dt.Rows[0].Field<int?>("qt_tolerancia");
+            Globals.startsAt = dt.Rows[0].Field<DateTime?>("dt_inicio");
+            Globals.endsAt = dt.Rows[0].Field<DateTime?>("dt_fim");
+            Globals.func_boundary = dt.Rows[0].Field<int?>("qt_limite_func");
+            Globals.prof_boundary = dt.Rows[0].Field<int?>("qt_limite_prof");
+        }
+
+		private void pictureBox1_Click(object sender, EventArgs e)
+		{
+
+		}
+	}
 }

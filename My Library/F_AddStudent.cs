@@ -89,5 +89,10 @@ namespace My_Library
 		{
 
 		}
+
+		private void mtb_cpf_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+		{
+
+		}
 	}
 }

@@ -191,6 +191,7 @@ namespace My_Library
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.Name = "F_AddEmployee";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cadastrar funcionário";
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);

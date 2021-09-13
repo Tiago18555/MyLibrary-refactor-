@@ -24,52 +24,24 @@ namespace My_Library
 
         #region MENU_STRIP
 
-        private void mi_addAuthor_Click(object sender, EventArgs e)
-        {
-            new F_AddAuthor().ShowDialog();
-        }
-
-
-        private void mi_addBook_Click(object sender, EventArgs e)
-        {
+        private void mi_addAuthor_Click(object sender, EventArgs e) =>        
+            new F_AddAuthor().ShowDialog(); 
+        private void mi_addBook_Click(object sender, EventArgs e) =>        
             new F_AddBook().ShowDialog();
-        }
-
-        private void mi_addPublisher_Click(object sender, EventArgs e)
-        {
+        private void mi_addPublisher_Click(object sender, EventArgs e) =>       
             new F_AddPublisher().ShowDialog();
-        }
-
-        private void mi_newStudent_Click(object sender, EventArgs e)
-        {
+        private void mi_newStudent_Click(object sender, EventArgs e) =>
             new F_AddStudent().ShowDialog();
-        }
-
-        private void mi_searchStudent_Click(object sender, EventArgs e)
-        {
+        private void mi_searchStudent_Click(object sender, EventArgs e) =>
             new F_SearchStudent().ShowDialog();
-        }
-
-        private void mi_viewLoans_Click(object sender, EventArgs e)
-        {
+        private void mi_viewLoans_Click(object sender, EventArgs e) =>
             new F_ViewLoans().ShowDialog();
-        }
-
-        private void mi_newEmployee_Click(object sender, EventArgs e)
-        {
+        private void mi_newEmployee_Click(object sender, EventArgs e) =>
             new F_AddEmployee().ShowDialog();
-        }
-
-        private void mi_searchEmployee_Click(object sender, EventArgs e)
-        {
+        private void mi_searchEmployee_Click(object sender, EventArgs e) =>
             new F_SearchEmployee().ShowDialog();
-        }
-
-        private void mi_about_Click(object sender, EventArgs e)
-        {
+        private void mi_about_Click(object sender, EventArgs e) =>
             new F_About().ShowDialog();
-        }
-
         private void mi_logout_Click(object sender, EventArgs e)
         {
             new F_Login().ShowDialog();

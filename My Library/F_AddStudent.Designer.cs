@@ -87,6 +87,7 @@ namespace My_Library
 			this.mtb_cpf.Name = "mtb_cpf";
 			this.mtb_cpf.Size = new System.Drawing.Size(230, 23);
 			this.mtb_cpf.TabIndex = 2;
+			this.mtb_cpf.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.mtb_cpf_MaskInputRejected);
 			this.mtb_cpf.TextChanged += new System.EventHandler(this.mtb_cpf_TextChanged);
 			// 
 			// tb_name

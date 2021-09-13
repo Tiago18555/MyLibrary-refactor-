@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,15 +14,42 @@ namespace My_Library
 		/// <summary>
 		/// Versão do aplicativo
 		/// </summary>
-		public static string versao = "1.0";
+		public static string versao = "1.3";
 		/// <summary>
 		/// Indica se existe um usuário logado
 		/// </summary>
 		public static bool logado = false;
+
+        //ENVIROMENT
 		public static string sys_path { get; set; } = Environment.CurrentDirectory;
 		public static string data_base_name { get; set; } = "biblioteca.db";
 		public static string path { get; set; } = sys_path + @"\banco\";
 
+		#region CONFIGURATIONS
+        
+        //FORFEIT & LOGIN
+        public static string? autoCompleteUserName { get; set; }
+		public static long? id_config { get; set; }
+        public static decimal? value { get; set; }
+        public static int? allowence { get; set; }
+        public static long? prof_boundary { get; set; }
+        public static long? func_boundary { get; set; }
+        public static DateTime? startsAt { get; set; }
+        public static DateTime? endsAt { get; set; }
+
+		//THEME
+		public static Color genericFontColor { get; set; }
+        public static Color titleFonteColor { get; set; }
+        public static Color genericBackgroundColor { get; set; }
+        public static Color forecolorOK { get; set; }
+        public static Color forecolorERR { get; set; }
+
+        //DATA FORMAT RULES
+
+
+        #endregion
+
+        #region UTILITIES
         /// <summary>
         /// Retorna true se o CPF é válido
         /// </summary>
@@ -192,5 +220,19 @@ namespace My_Library
                 key != 13 &&
                 key != 27;
         }
+
+        public static bool compare(Dictionary<long, string> list, string keyword)
+        {
+            foreach (string item in list.Values)
+                if (item == keyword) { return true; }
+            return false;
+		}
+        public static bool compare(Dictionary<int, string> list, string keyword)
+        {
+            foreach (string item in list.Values)
+                if (item == keyword) { return true; }
+            return false;
+        }
+        #endregion
     }
 }

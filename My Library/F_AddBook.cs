@@ -12,8 +12,6 @@ namespace My_Library
 {
     public partial class F_AddBook : Form
     {
-		DataTable dt;
-
 		public F_AddBook() => InitializeComponent();
 		Dictionary<int, string> authors = new Dictionary<int, string>();
 		Dictionary<int, string> publishers = new Dictionary<int, string>();
@@ -144,8 +142,7 @@ namespace My_Library
 						WHERE cd_ibsn = '{0}'",
 					tb_ibsn.Text, nm_qtd.Value
 				);
-				MessageBox.Show("IBSN: " + tb_ibsn.Text + "\nQTD: " + nm_qtd.Value);
-				Database.dml(update, "updateMAINOK", "ERR MAIN");
+				Database.dml(update);
 				string insert = String.Format(@"
 						INSERT INTO tb_livro_unit(cd_livro, ic_disponivel)
 						VALUES((SELECT cd_livro FROM tb_livro WHERE cd_ibsn = '{0}'), 1)
@@ -153,6 +150,7 @@ namespace My_Library
 				for (int i = 0; i < nm_qtd.Value; i++)				
 					Database.dml(insert);
 			}
+			clearAll();
 		}
 		public void registerBook(string type)
 		{
@@ -180,6 +178,7 @@ namespace My_Library
 			);
 			for (int i = 0; i < nm_qtd.Value; i++)
 				Database.dml(insert);
+			clearAll();
 		}
 	}
 }

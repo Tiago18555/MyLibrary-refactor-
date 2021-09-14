@@ -51,13 +51,14 @@ namespace My_Library
             {
                 string insert = String.Format(@"
 					INSERT INTO 
-						tb_usuario(cd_cpf, ds_email, nm_usuario, ic_desativado, ds_tipo)
+						tb_usuario(cd_cpf, ds_email, nm_usuario, ic_desativado, ds_tipo, cd_usuario)
 					VALUES
-						('{0}', '{1}', '{2}', 1, {3})",
+						('{0}', '{1}', '{2}', 1, {3}, '{4}')",
                     Globals.formatCPF(mtb_cpf.Text),
                     tb_email.Text,
                     tb_name.Text,
-                    isProfessor
+                    isProfessor,
+                    tb_registration.Text
                 );
                 Database.dml(insert, Message + " Cadastrado com sucesso", "Erro no cadastro");
             }

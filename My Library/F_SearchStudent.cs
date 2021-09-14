@@ -63,10 +63,8 @@ namespace My_Library
 			btn_setName.Enabled = tb_name.Text.Length > 5 && tb_name.Enabled;
 		private void tb_email_TextChanged(object sender, EventArgs e) =>		
 			btn_setEmail.Enabled = Globals.validaEmail(tb_email.Text) && mtb_cpf.Enabled;
-		private void tb_rm_TextChanged(object sender, EventArgs e)
-		{
-			btn_search.Enabled = !String.IsNullOrEmpty(tb_rm.Text);
-		}
+		private void tb_rm_TextChanged(object sender, EventArgs e) =>		
+			btn_search.Enabled = !String.IsNullOrEmpty(tb_rm.Text);		
 		private void mtb_cpf_TextChanged(object sender, EventArgs e)
 		{
 			if (mtb_cpf.Text.Length == 14 && mtb_cpf.Enabled)
@@ -78,6 +76,8 @@ namespace My_Library
 		}
 		private void btn_search_Click(object sender, EventArgs e)
 		{
+			resetWindow();
+			btn_loadLoans.Enabled = true;
 			string select = String.Format(@"
 				SELECT
 					cd_cpf, ds_email, nm_usuario
@@ -135,12 +135,12 @@ namespace My_Library
 					row.delay.ToString() + " dias.",					
 					"R$ " + row.value.ToString() + "."
 				);
-				if(row.delay < 0)
+				if(row.delay > 0)
                 {
 					blockNewLoan = true;
                 }
 			};
-			btn_loan.Enabled = !blockNewLoan;
+			btn_showLoan.Enabled = !blockNewLoan;
 		}
 		private void btn_returnBook_Click(object sender, EventArgs e)
 		{
@@ -176,12 +176,13 @@ namespace My_Library
 
 		#region NEW LOAN
 
-		private void btn_loan_Click(object sender, EventArgs e)
+		private void btn_showLoan_Click(object sender, EventArgs e)
 		{
 			setNewLoanControlsEnabled(true);
 
 			tb_deadLine.Text = DateTime.Now.AddDays(Convert.ToInt32(Globals.allowence)).ToString();
 			tb_loanValue.Text = Globals.value.ToString();
+
 			loadCB_books();
 			if(cb_books.SelectedValue == null) { return; }
 			loadCB_tombo(cb_books.SelectedValue.ToString());
@@ -199,7 +200,7 @@ namespace My_Library
 		}
 		private void cb_tombo_KeyPress(object sender, KeyPressEventArgs e) => e.Handled = true;
 		private void cb_books_TextChanged(object sender, EventArgs e) =>
-		 btn_loan.Enabled = Globals.compare(books, cb_books.Text);
+		 btn_showLoan.Enabled = Globals.compare(books, cb_books.Text);
 		private void cb_tombo_TextChanged(object sender, EventArgs e) =>
 			btn_newLoan.Enabled = !String.IsNullOrEmpty(cb_tombo.Text);
 
@@ -207,12 +208,21 @@ namespace My_Library
 
 		#region COMMON FUNCTIONS
 
+		/// <summary>
+		/// Controla a propriedade 'Enabled' dos componentes para novos empréstimos
+		/// </summary>
+		/// <param name="state"></param>
 		public void setNewLoanControlsEnabled(bool state)
 		{
 			cb_books.Enabled = state;
 			cb_tombo.Enabled = state;
 			btn_clearLoan.Enabled = state;
 		}
+
+		/// <summary>
+		/// Controla a propriedade 'Enabled' dos componentes para alteração de dados cadastrais
+		/// </summary>
+		/// <param name="state"></param>
 		public void setEditControlsEnabled(bool state)
 		{
 			tb_name.Enabled = state;
@@ -220,6 +230,10 @@ namespace My_Library
 			mtb_cpf.Enabled = state;
 			btn_Clear.Enabled = state;
 		}
+
+		/// <summary>
+		/// Limpa os componentes de novos empréstimos
+		/// </summary>
 		public void clearLoanControls()
 		{
 			cb_books.Text = "";
@@ -227,12 +241,20 @@ namespace My_Library
 			tb_deadLine.Clear();
 			tb_loanValue.Clear();
 		}
+
+		/// <summary>
+		/// Limpa os componentes de alteração de dados cadastrais
+		/// </summary>
 		public void clearEditControls()
 		{
 			tb_name.Clear();
 			tb_email.Clear();
 			mtb_cpf.Clear();
 		}
+
+		/// <summary>
+		/// Preenche o Dropdown List "livros"
+		/// </summary>
 		public void loadCB_books()
         {
 			string select = String.Format(@"
@@ -258,6 +280,11 @@ namespace My_Library
 			cb_books.ValueMember = "Key";
 			dt.Dispose();
 		}
+
+		/// <summary>
+		/// Preenche o Dropdown List "tombo"
+		/// </summary>
+		/// <param name="id"></param>
 		public void loadCB_tombo(string id)
 		{
 			string select = String.Format(@"
@@ -279,6 +306,10 @@ namespace My_Library
 			cb_tombo.Text = "";
 			dt.Dispose();
 		}
+
+		/// <summary>
+		/// Efetua a operação de empréstimo
+		/// </summary>
 		public void getNewBook()
 		{
 			//1: Atualização no banco de dados
@@ -328,6 +359,11 @@ namespace My_Library
 				"R$ " + 0
 			);
 		}
+
+		/// <summary>
+		/// Efetua a operação de devolução
+		/// </summary>
+		/// <param name="index">Código do Livro</param>
 		public void returnBook(byte index)
 		{
 			string update = String.Format(@"
@@ -356,6 +392,10 @@ namespace My_Library
 			);
 			Database.dml(update, "Devolução bem sucedida", "Erro");
 		}
+
+		/// <summary>
+		/// Adiciona um novo item do tipo Forfeit(Empréstimo) na coleção List<Forfeit>
+		/// </summary>
 		public void addRowToForfeitList()
 		{
 			int index = _student._forfeit.Count();
@@ -380,11 +420,19 @@ namespace My_Library
 			_student._forfeit.Add(f);
 		}
 
+		/// <summary>
+		/// Redefine todos os campos da janela
+		/// </summary>
+		public void resetWindow()
+		{
+			clearLoanControls();
+			setEditControlsEnabled(false);
+			setNewLoanControlsEnabled(false);
+			if(dgv_Loans.Rows.Count != 0) { dgv_Loans.Rows.Clear(); }
+			btn_returnBook.Enabled = false;
+			btn_newLoan.Enabled =false;
+		}
+
         #endregion
-
-        private void dgv_Loans_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }

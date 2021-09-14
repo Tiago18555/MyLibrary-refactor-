@@ -14,7 +14,7 @@ namespace My_Library
     {
 		private byte minimumNameLength { get; set; } = 3;
 		private byte minimumRMLength { get; set; } = 5;
-		private Color foreColorOK { get; set; } = Color.Green;
+		private Color foreColorOK { get; set; } = Color.FromArgb(0,255,0);
 		private Color foreColorErr { get; set; } = Color.Red;
 		public F_AddStudent() =>InitializeComponent();
 		private void tb_name_TextChanged(object sender, EventArgs e) => setRegisterButtonEnabled();

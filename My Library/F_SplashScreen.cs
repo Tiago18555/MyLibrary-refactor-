@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
@@ -69,7 +70,7 @@ namespace My_Library
 		{
 
 		}
-        public void loadForfeitConfigs()
+        public static void loadForfeitConfigs()
 		{
             string select = String.Format(@"
                 SELECT * FROM tb_configs
@@ -77,12 +78,39 @@ namespace My_Library
             ");
             DataTable dt = Database.dql(select);
             Globals.id_config = dt.Rows[0].Field<long?>("cd_configuracao");
-            Globals.value = dt.Rows[0].Field<decimal?>("vl_multa");
+            Globals.value = dt.Rows[0].Field<decimal>("vl_multa");
             Globals.allowence = dt.Rows[0].Field<int?>("qt_tolerancia");
             Globals.startsAt = dt.Rows[0].Field<DateTime?>("dt_inicio");
             Globals.endsAt = dt.Rows[0].Field<DateTime?>("dt_fim");
             Globals.func_boundary = dt.Rows[0].Field<int?>("qt_limite_func");
             Globals.prof_boundary = dt.Rows[0].Field<int?>("qt_limite_prof");
+        }
+        public static void loadThemes()
+        {
+            string filepath = Globals.sys_path + "\\themes.configs";
+            string filetemplate = String.Format(@"
+                theme : Claro,
+                autoCompleteLogin: root,
+		        genericFontColor : 000.000.000,
+                titleFonteColor : 080.080.080,
+                genericBackgroundColor : 255.255.255,
+                forecolorOK : 000.255.000,
+                forecolorERR : 255.000.000
+
+
+
+                Made by Tiago18555
+                www.github.com/Tiago18555
+            ");
+            if (File.Exists(filepath))
+            {
+                File.OpenRead(filepath);
+            }
+            else
+            {
+                File.CreateText(filepath);
+                File.WriteAllText("themes.configs", filetemplate);
+            }
         }
 
 		private void pictureBox1_Click(object sender, EventArgs e)

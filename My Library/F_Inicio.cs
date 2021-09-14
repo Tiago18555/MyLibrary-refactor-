@@ -42,6 +42,8 @@ namespace My_Library
             new F_SearchEmployee().ShowDialog();
         private void mi_about_Click(object sender, EventArgs e) =>
             new F_About().ShowDialog();
+        private void mi_configs_Click(object sender, EventArgs e) => 
+            new F_Configs().ShowDialog();
         private void mi_logout_Click(object sender, EventArgs e)
         {
             new F_Login().ShowDialog();
@@ -50,5 +52,6 @@ namespace My_Library
         }
 
         #endregion
+
     }
 }

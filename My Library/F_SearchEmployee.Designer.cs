@@ -32,11 +32,13 @@ namespace My_Library
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btn_loan = new System.Windows.Forms.Button();
+            this.btn_showLoan = new System.Windows.Forms.Button();
             this.btn_loadLoans = new System.Windows.Forms.Button();
             this.btn_sair = new System.Windows.Forms.Button();
             this.btn_returnBook = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tb_boundary = new System.Windows.Forms.TextBox();
             this.cb_tombo = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.btn_clearLoan = new System.Windows.Forms.Button();
@@ -60,13 +62,13 @@ namespace My_Library
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgv_Loans = new System.Windows.Forms.DataGridView();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.rb_professor = new System.Windows.Forms.RadioButton();
+            this.rb_employee = new System.Windows.Forms.RadioButton();
             this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ibsn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tombo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.start = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.rb_professor = new System.Windows.Forms.RadioButton();
-            this.rb_employee = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -77,7 +79,7 @@ namespace My_Library
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btn_loan);
+            this.panel1.Controls.Add(this.btn_showLoan);
             this.panel1.Controls.Add(this.btn_loadLoans);
             this.panel1.Controls.Add(this.btn_sair);
             this.panel1.Controls.Add(this.btn_returnBook);
@@ -86,17 +88,17 @@ namespace My_Library
             this.panel1.Size = new System.Drawing.Size(620, 43);
             this.panel1.TabIndex = 14;
             // 
-            // btn_loan
+            // btn_showLoan
             // 
-            this.btn_loan.Enabled = false;
-            this.btn_loan.Location = new System.Drawing.Point(133, 0);
-            this.btn_loan.Name = "btn_loan";
-            this.btn_loan.Size = new System.Drawing.Size(128, 43);
-            this.btn_loan.TabIndex = 2;
-            this.btn_loan.TabStop = false;
-            this.btn_loan.Text = "Novo empréstimo";
-            this.btn_loan.UseVisualStyleBackColor = true;
-            this.btn_loan.Click += new System.EventHandler(this.btn_loan_Click);
+            this.btn_showLoan.Enabled = false;
+            this.btn_showLoan.Location = new System.Drawing.Point(133, 0);
+            this.btn_showLoan.Name = "btn_showLoan";
+            this.btn_showLoan.Size = new System.Drawing.Size(128, 43);
+            this.btn_showLoan.TabIndex = 2;
+            this.btn_showLoan.TabStop = false;
+            this.btn_showLoan.Text = "Novo empréstimo";
+            this.btn_showLoan.UseVisualStyleBackColor = true;
+            this.btn_showLoan.Click += new System.EventHandler(this.btn_showLoan_Click);
             // 
             // btn_loadLoans
             // 
@@ -133,6 +135,8 @@ namespace My_Library
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.tb_boundary);
             this.groupBox3.Controls.Add(this.cb_tombo);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.btn_clearLoan);
@@ -146,10 +150,27 @@ namespace My_Library
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Novo empréstimo";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(21, 125);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(43, 15);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Limite:";
+            // 
+            // tb_boundary
+            // 
+            this.tb_boundary.Location = new System.Drawing.Point(78, 122);
+            this.tb_boundary.Name = "tb_boundary";
+            this.tb_boundary.ReadOnly = true;
+            this.tb_boundary.Size = new System.Drawing.Size(100, 23);
+            this.tb_boundary.TabIndex = 8;
+            // 
             // cb_tombo
             // 
             this.cb_tombo.FormattingEnabled = true;
-            this.cb_tombo.Location = new System.Drawing.Point(20, 117);
+            this.cb_tombo.Location = new System.Drawing.Point(21, 92);
             this.cb_tombo.Name = "cb_tombo";
             this.cb_tombo.Size = new System.Drawing.Size(404, 23);
             this.cb_tombo.TabIndex = 6;
@@ -159,7 +180,7 @@ namespace My_Library
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(20, 99);
+            this.label8.Location = new System.Drawing.Point(21, 74);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(47, 15);
             this.label8.TabIndex = 7;
@@ -191,7 +212,7 @@ namespace My_Library
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 50);
+            this.label5.Location = new System.Drawing.Point(21, 25);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(36, 15);
             this.label5.TabIndex = 1;
@@ -200,7 +221,7 @@ namespace My_Library
             // cb_books
             // 
             this.cb_books.FormattingEnabled = true;
-            this.cb_books.Location = new System.Drawing.Point(20, 68);
+            this.cb_books.Location = new System.Drawing.Point(21, 43);
             this.cb_books.Name = "cb_books";
             this.cb_books.Size = new System.Drawing.Size(403, 23);
             this.cb_books.TabIndex = 5;
@@ -218,6 +239,7 @@ namespace My_Library
             this.btn_search.TabIndex = 12;
             this.btn_search.TabStop = false;
             this.btn_search.UseVisualStyleBackColor = true;
+            this.btn_search.Click += new System.EventHandler(this.btn_search_Click);
             // 
             // groupBox2
             // 
@@ -418,32 +440,6 @@ namespace My_Library
             this.dgv_Loans.TabIndex = 0;
             this.dgv_Loans.SelectionChanged += new System.EventHandler(this.dgv_Loans_SelectionChanged);
             // 
-            // title
-            // 
-            this.title.HeaderText = "Título";
-            this.title.Name = "title";
-            this.title.ReadOnly = true;
-            this.title.Width = 250;
-            // 
-            // ibsn
-            // 
-            this.ibsn.HeaderText = "IBSN";
-            this.ibsn.Name = "ibsn";
-            this.ibsn.ReadOnly = true;
-            // 
-            // tombo
-            // 
-            this.tombo.HeaderText = "Tombo";
-            this.tombo.Name = "tombo";
-            this.tombo.ReadOnly = true;
-            // 
-            // start
-            // 
-            this.start.HeaderText = "Data do empréstimo";
-            this.start.Name = "start";
-            this.start.ReadOnly = true;
-            this.start.Width = 167;
-            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.rb_professor);
@@ -475,6 +471,34 @@ namespace My_Library
             this.rb_employee.TabStop = true;
             this.rb_employee.Text = "Funcionário";
             this.rb_employee.UseVisualStyleBackColor = true;
+            // 
+            // title
+            // 
+            this.title.HeaderText = "Título";
+            this.title.Name = "title";
+            this.title.ReadOnly = true;
+            this.title.Width = 250;
+            // 
+            // ibsn
+            // 
+            this.ibsn.HeaderText = "IBSN";
+            this.ibsn.Name = "ibsn";
+            this.ibsn.ReadOnly = true;
+            this.ibsn.Width = 130;
+            // 
+            // tombo
+            // 
+            this.tombo.HeaderText = "Tombo";
+            this.tombo.Name = "tombo";
+            this.tombo.ReadOnly = true;
+            this.tombo.Width = 70;
+            // 
+            // start
+            // 
+            this.start.HeaderText = "Data do empréstimo";
+            this.start.Name = "start";
+            this.start.ReadOnly = true;
+            this.start.Width = 167;
             // 
             // F_SearchEmployee
             // 
@@ -512,7 +536,7 @@ namespace My_Library
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button btn_loan;
+        private System.Windows.Forms.Button btn_showLoan;
         private System.Windows.Forms.Button btn_loadLoans;
         private System.Windows.Forms.Button btn_sair;
         private System.Windows.Forms.Button btn_returnBook;
@@ -540,12 +564,14 @@ namespace My_Library
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgv_Loans;
+		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.RadioButton rb_professor;
+		private System.Windows.Forms.RadioButton rb_employee;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox tb_boundary;
         private System.Windows.Forms.DataGridViewTextBoxColumn title;
         private System.Windows.Forms.DataGridViewTextBoxColumn ibsn;
         private System.Windows.Forms.DataGridViewTextBoxColumn tombo;
         private System.Windows.Forms.DataGridViewTextBoxColumn start;
-		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.RadioButton rb_professor;
-		private System.Windows.Forms.RadioButton rb_employee;
-	}
+    }
 }

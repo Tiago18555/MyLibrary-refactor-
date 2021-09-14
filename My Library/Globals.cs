@@ -30,7 +30,7 @@ namespace My_Library
         //FORFEIT & LOGIN
         public static string? autoCompleteUserName { get; set; }
 		public static long? id_config { get; set; }
-        public static decimal? value { get; set; }
+        public static decimal value { get; set; }
         public static int? allowence { get; set; }
         public static long? prof_boundary { get; set; }
         public static long? func_boundary { get; set; }
@@ -50,6 +50,7 @@ namespace My_Library
         #endregion
 
         #region UTILITIES
+
         /// <summary>
         /// Retorna true se o CPF é válido
         /// </summary>
@@ -221,12 +222,25 @@ namespace My_Library
                 key != 27;
         }
 
+        /// <summary>
+        /// Compara uma lista do tipo Dictionary com uma string
+        /// </summary>
+        /// <param name="list">Lista do tipo Dictionary<Int64, string></param>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
         public static bool compare(Dictionary<long, string> list, string keyword)
         {
             foreach (string item in list.Values)
                 if (item == keyword) { return true; }
             return false;
 		}
+
+        /// <summary>
+        /// Compara uma lista do tipo Dictionary com uma string
+        /// </summary>
+        /// <param name="list">Lista do tipo Dictionary<Int32, string</param>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
         public static bool compare(Dictionary<int, string> list, string keyword)
         {
             foreach (string item in list.Values)

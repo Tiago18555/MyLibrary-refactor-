@@ -15,12 +15,13 @@ namespace My_Library
         private Employee _employee;
         private Color foreColorOK { get; set; } = Color.Green;
         private Color foreColorErr { get; set; } = Color.Red;
-        Dictionary<long, string> books = new Dictionary<long, string>();
+        Dictionary<int, string> books = new Dictionary<int, string>();
         public F_SearchEmployee() => InitializeComponent();
         private void F_SearchEmployee_Load(object sender, EventArgs e)
         {
             setEditControlsEnabled(false);
             setNewLoanControlsEnabled(false);
+            rb_employee.Checked = true;
         }
 
         #region: EDIT AND SEARCH CONTROLS
@@ -76,6 +77,8 @@ namespace My_Library
         }
         private void btn_search_Click(object sender, EventArgs e)
         {
+            resetWindow();
+            btn_loadLoans.Enabled = true;
             //2: prof, 3: func
             string type = rb_professor.Checked ? "2" : "3";
             string message = rb_professor.Checked ? "Professor" : "Funcionário";
@@ -85,7 +88,7 @@ namespace My_Library
 				FROM
 					tb_usuario
 				WHERE
-					cd_usuario = {0} AND ic_desativado = 1 AND ds_tipo = {1} 
+					cd_usuario = '{0}' AND ic_desativado = 1 AND ds_tipo = {1} 
 				", tb_registration.Text, type
             );
             DataTable dt = Database.dql(select);
@@ -122,7 +125,6 @@ namespace My_Library
         private void btn_loadLoans_Click(object sender, EventArgs e)
         {
             _employee.LoadForfeitData(rb_professor.Checked);
-            long? allowence = rb_professor.Checked ? Globals.prof_boundary : Globals.func_boundary;
             setNewLoanButtonEnabled();
 
             foreach (Employee.forfeit row in this._employee._forfeit)
@@ -134,7 +136,12 @@ namespace My_Library
                     row.start.ToString()
                 );
             };
-            btn_loan.Enabled = _employee._forfeit.Count > allowence;
+            btn_loadLoans.Enabled = false;
+            refreshBoundaryStatus(
+                rb_professor.Checked ? 
+                Globals.prof_boundary : 
+                Globals.func_boundary
+            );
         }
         private void btn_returnBook_Click(object sender, EventArgs e)
         {
@@ -143,6 +150,11 @@ namespace My_Library
             _employee._forfeit.RemoveAt(index);
             dgv_Loans.Rows.RemoveAt(index);
             loadCB_books();
+            refreshBoundaryStatus(
+                rb_professor.Checked ? 
+                Globals.prof_boundary : 
+                Globals.func_boundary
+            );
         }
         public void btn_sair_Click(object sender, EventArgs e)
         {
@@ -157,10 +169,12 @@ namespace My_Library
 
         #region NEW LOAN
 
-        private void btn_loan_Click(object sender, EventArgs e)
+        private void btn_showLoan_Click(object sender, EventArgs e)
         {
             setNewLoanControlsEnabled(true);
+
             loadCB_books();
+            if (cb_books.SelectedValue == null) { return; }
             loadCB_tombo(cb_books.SelectedValue.ToString());
         }
         private void btn_newLoan_Click(object sender, EventArgs e)
@@ -169,17 +183,19 @@ namespace My_Library
             cb_tombo.Items.RemoveAt(cb_tombo.SelectedIndex);
             cb_tombo.SelectedIndex = -1;
             cb_tombo.Text = "";
-            cb_books.Items.Clear();
             cb_books.Text = "";
+            refreshBoundaryStatus(
+                rb_professor.Checked ? 
+                Globals.prof_boundary : 
+                Globals.func_boundary
+            );
         }
         private void btn_clearLoan_Click(object sender, EventArgs e) => clearLoanControls();
         private void cb_tombo_KeyPress(object sender, KeyPressEventArgs e) => e.Handled = true;
-        private void cb_books_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void cb_books_SelectedIndexChanged(object sender, EventArgs e) =>
             loadCB_tombo(cb_books.SelectedValue.ToString());
-        }
         private void cb_books_TextChanged(object sender, EventArgs e) =>
-            btn_loan.Enabled = Globals.compare(books, cb_books.Text);
+            btn_showLoan.Enabled = Globals.compare(books, cb_books.Text);
         private void cb_tombo_TextChanged(object sender, EventArgs e) =>
             btn_newLoan.Enabled = !String.IsNullOrEmpty(cb_tombo.Text);
 
@@ -187,12 +203,21 @@ namespace My_Library
 
         #region COMMON FUNCTIONS
 
+        /// <summary>
+        /// Controla a propriedade 'Enabled' dos componentes para novos empréstimos
+        /// </summary>
+        /// <param name="state"></param>
         public void setNewLoanControlsEnabled(bool state)
         {
             cb_books.Enabled = state;
             cb_tombo.Enabled = state;
             btn_clearLoan.Enabled = state;
         }
+
+        /// <summary>
+        /// Controla a propriedade 'Enabled' dos componentes para alteração de dados cadastrais
+        /// </summary>
+        /// <param name="state"></param>
         public void setEditControlsEnabled(bool state)
         {
             tb_name.Enabled = state;
@@ -200,27 +225,43 @@ namespace My_Library
             mtb_cpf.Enabled = state;
             btn_Clear.Enabled = state;
         }
+
+        /// <summary>
+        /// Ativa/ Desativa o botão "Novo empréstimo", de acordo com o total de livros na List<Forfeit>
+        /// </summary>
         public void setNewLoanButtonEnabled()
 		{
-            btn_loan.Enabled = (
+            btn_showLoan.Enabled = (
                 rb_employee.Checked &&
-                _employee._forfeit.Count <= Globals.func_boundary
+                _employee._forfeit.Count < Convert.ToInt32(Globals.func_boundary)
             ) || (
                 rb_professor.Checked &&
-                _employee._forfeit.Count <= Globals.prof_boundary
+                _employee._forfeit.Count < Convert.ToInt32(Globals.prof_boundary)
             );
         }
+
+        /// <summary>
+        /// Limpa os componentes de novos empréstimos
+        /// </summary>
         public void clearLoanControls()
         {
             cb_books.Text = "";
             cb_tombo.Text = "";
         }
+
+        /// <summary>
+        /// Limpa os componentes de alteração de dados cadastrais
+        /// </summary>
         public void clearEditControls()
         {
             tb_name.Clear();
             tb_email.Clear();
             mtb_cpf.Clear();
         }
+
+        /// <summary>
+        /// Preenche o Dropdown List "livros"
+        /// </summary>
         public void loadCB_books()
         {
             string select = String.Format(@"
@@ -233,7 +274,7 @@ namespace My_Library
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 books.Add(
-                    dt.Rows[i].Field<long>("cd_livro"),
+                    Convert.ToInt32(dt.Rows[i].Field<long>("cd_livro")),
                     dt.Rows[i].Field<string>("nm_titulo")
                 );
             }
@@ -244,10 +285,15 @@ namespace My_Library
             cb_books.DataSource = new BindingSource(books, null);
             cb_books.DisplayMember = "Value";
             cb_books.ValueMember = "Key";
+            dt.Dispose();
         }
-        public void loadCB_tombo(string id = null)
+
+        /// <summary>
+        /// Preenche o Dropdown List "tombo"
+        /// </summary>
+        /// <param name="id"></param>
+        public void loadCB_tombo(string id)
         {
-            if (id == null) { return; }
             string select = String.Format(@"
 				SELECT cd_tombo
 				FROM tb_livro_unit
@@ -266,6 +312,11 @@ namespace My_Library
             cb_tombo.Text = "";
             dt.Dispose();
         }
+
+        /// <summary>
+        /// Efetua a operação de empréstimo
+        /// </summary>
+        /// <param name="isProf"></param>
         public void getNewBook(bool isProf)
         {
             //1: Atualização no banco de dados
@@ -288,16 +339,16 @@ namespace My_Library
                 INSERT INTO tb_emprestimos
                 (cd_usuario, cd_tombo, cd_configuracao, dt_inicio)
                 VALUES
-                ('{0}', {1}, {2}, DATETIME('NOW','LOCALTIME')",
+                ('{0}', {1}, {2}, DATETIME('NOW','LOCALTIME'))",
                 _employee.getUserID(),
                 cb_tombo.SelectedItem,
                 Globals.id_config
             );
 
             //2: Atualização do DataGridView e da List<Forfeit>
-            int index = _employee._forfeit.Count - 2;
+            int index = _employee._forfeit.Count - 1;
             Database.dml(insert,
-                "Operação bem sucedida. \n\nVocê possui " + (index + 1) .ToString() + "/" + boundary.ToString(),
+                "Operação bem sucedida. \n\nVocê possui " + (index + 2) .ToString() + "/" + boundary.ToString(),
                 "Erro");
             addRowToForfeitList();
             dgv_Loans.Rows.Add(
@@ -306,7 +357,14 @@ namespace My_Library
                 _employee._forfeit[index]._book.tombo,
                 _employee._forfeit[index].start.ToString()
             );
+            setNewLoanControlsEnabled(false);
+            setNewLoanButtonEnabled();
         }
+
+        /// <summary>
+        /// Efetua a operação de devolução
+        /// </summary>
+        /// <param name="index">Código do livro</param>
         public void returnBook(byte index)
         {
             string update = String.Format(@"
@@ -334,7 +392,12 @@ namespace My_Library
                 _employee._forfeit[index].cd_emprestimo
             );
             Database.dml(update, "Devolução bem sucedida", "Erro");
+            setNewLoanButtonEnabled();
         }
+
+        /// <summary>
+        /// Adiciona um novo item do tipo Forfeit(Empréstimo) na coleção List<Forfeit>
+        /// </summary>
 		public void addRowToForfeitList()
 		{
             int index = _employee._forfeit.Count();
@@ -345,14 +408,37 @@ namespace My_Library
             dt = Database.dql("SELECT cd_ibsn FROM tb_livro WHERE cd_livro = " + cb_books.SelectedValue);
             b.ibsn = dt.Rows[0].Field<string>("cd_ibsn");
             b.tombo = cb_tombo.SelectedItem.ToString();
-            b.title = cb_books.SelectedText.ToString();
+            b.title = cb_books.Text;
             f.start = DateTime.Now;
             f._book = b;
 
             _employee._forfeit.Add(f);
         }
 
+        /// <summary>
+        /// Redefine todos os campos da janela
+        /// </summary>
+        public void resetWindow()
+        {
+            clearLoanControls();
+            setEditControlsEnabled(false);
+            setNewLoanControlsEnabled(false);
+            if (dgv_Loans.Rows.Count != 0) { dgv_Loans.Rows.Clear(); }
+            btn_returnBook.Enabled = false;
+            btn_newLoan.Enabled = false;
+        }
+
+        /// <summary>
+        /// Atualiza a textbox "boundary"
+        /// </summary>
+        /// <param name="allowence">Valor do limite de empréstimos simultâneos</param>
+        public void refreshBoundaryStatus(long? allowence)
+        {
+            tb_boundary.Text = String.Format(@"{0} / {1}",
+                _employee._forfeit.Count.ToString(),
+                allowence.ToString());
+        }
+
         #endregion
-        
     }
 }

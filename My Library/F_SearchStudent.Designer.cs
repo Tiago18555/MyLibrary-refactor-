@@ -32,13 +32,6 @@ namespace My_Library
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgv_Loans = new System.Windows.Forms.DataGridView();
-            this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ibsn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tombo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.start = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.end = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.delay = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tb_rm = new System.Windows.Forms.TextBox();
@@ -68,9 +61,16 @@ namespace My_Library
             this.label5 = new System.Windows.Forms.Label();
             this.cb_books = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btn_loan = new System.Windows.Forms.Button();
+            this.btn_showLoan = new System.Windows.Forms.Button();
             this.btn_sair = new System.Windows.Forms.Button();
             this.btn_returnBook = new System.Windows.Forms.Button();
+            this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ibsn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tombo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.start = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.end = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.delay = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Loans)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -119,54 +119,7 @@ namespace My_Library
             this.dgv_Loans.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgv_Loans.Size = new System.Drawing.Size(1014, 464);
             this.dgv_Loans.TabIndex = 0;
-            this.dgv_Loans.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Loans_CellContentClick);
             this.dgv_Loans.SelectionChanged += new System.EventHandler(this.dgv_Loans_SelectionChanged);
-            // 
-            // title
-            // 
-            this.title.HeaderText = "Título";
-            this.title.Name = "title";
-            this.title.ReadOnly = true;
-            this.title.Width = 250;
-            // 
-            // ibsn
-            // 
-            this.ibsn.HeaderText = "IBSN";
-            this.ibsn.Name = "ibsn";
-            this.ibsn.ReadOnly = true;
-            // 
-            // tombo
-            // 
-            this.tombo.HeaderText = "Tombo";
-            this.tombo.Name = "tombo";
-            this.tombo.ReadOnly = true;
-            // 
-            // start
-            // 
-            this.start.HeaderText = "Data do empréstimo";
-            this.start.Name = "start";
-            this.start.ReadOnly = true;
-            this.start.Width = 167;
-            // 
-            // end
-            // 
-            this.end.HeaderText = "Data Limite";
-            this.end.Name = "end";
-            this.end.ReadOnly = true;
-            this.end.Width = 167;
-            // 
-            // delay
-            // 
-            this.delay.HeaderText = "Atraso";
-            this.delay.Name = "delay";
-            this.delay.ReadOnly = true;
-            // 
-            // value
-            // 
-            this.value.HeaderText = "Valor da multa";
-            this.value.Name = "value";
-            this.value.ReadOnly = true;
-            this.value.Width = 126;
             // 
             // groupBox1
             // 
@@ -329,6 +282,7 @@ namespace My_Library
             // 
             // btn_loadLoans
             // 
+            this.btn_loadLoans.Enabled = false;
             this.btn_loadLoans.Location = new System.Drawing.Point(292, 0);
             this.btn_loadLoans.Name = "btn_loadLoans";
             this.btn_loadLoans.Size = new System.Drawing.Size(118, 43);
@@ -469,7 +423,7 @@ namespace My_Library
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btn_loan);
+            this.panel1.Controls.Add(this.btn_showLoan);
             this.panel1.Controls.Add(this.btn_loadLoans);
             this.panel1.Controls.Add(this.btn_sair);
             this.panel1.Controls.Add(this.btn_returnBook);
@@ -478,17 +432,17 @@ namespace My_Library
             this.panel1.Size = new System.Drawing.Size(1015, 43);
             this.panel1.TabIndex = 7;
             // 
-            // btn_loan
+            // btn_showLoan
             // 
-            this.btn_loan.Enabled = false;
-            this.btn_loan.Location = new System.Drawing.Point(133, 0);
-            this.btn_loan.Name = "btn_loan";
-            this.btn_loan.Size = new System.Drawing.Size(128, 43);
-            this.btn_loan.TabIndex = 2;
-            this.btn_loan.TabStop = false;
-            this.btn_loan.Text = "Novo empréstimo";
-            this.btn_loan.UseVisualStyleBackColor = true;
-            this.btn_loan.Click += new System.EventHandler(this.btn_loan_Click);
+            this.btn_showLoan.Enabled = false;
+            this.btn_showLoan.Location = new System.Drawing.Point(133, 0);
+            this.btn_showLoan.Name = "btn_showLoan";
+            this.btn_showLoan.Size = new System.Drawing.Size(128, 43);
+            this.btn_showLoan.TabIndex = 2;
+            this.btn_showLoan.TabStop = false;
+            this.btn_showLoan.Text = "Novo empréstimo";
+            this.btn_showLoan.UseVisualStyleBackColor = true;
+            this.btn_showLoan.Click += new System.EventHandler(this.btn_showLoan_Click);
             // 
             // btn_sair
             // 
@@ -511,6 +465,54 @@ namespace My_Library
             this.btn_returnBook.Text = "Devolver";
             this.btn_returnBook.UseVisualStyleBackColor = true;
             this.btn_returnBook.Click += new System.EventHandler(this.btn_returnBook_Click);
+            // 
+            // title
+            // 
+            this.title.HeaderText = "Título";
+            this.title.Name = "title";
+            this.title.ReadOnly = true;
+            this.title.Width = 250;
+            // 
+            // ibsn
+            // 
+            this.ibsn.HeaderText = "IBSN";
+            this.ibsn.Name = "ibsn";
+            this.ibsn.ReadOnly = true;
+            this.ibsn.Width = 130;
+            // 
+            // tombo
+            // 
+            this.tombo.HeaderText = "Tombo";
+            this.tombo.Name = "tombo";
+            this.tombo.ReadOnly = true;
+            this.tombo.Width = 70;
+            // 
+            // start
+            // 
+            this.start.HeaderText = "Data do empréstimo";
+            this.start.Name = "start";
+            this.start.ReadOnly = true;
+            this.start.Width = 167;
+            // 
+            // end
+            // 
+            this.end.HeaderText = "Data Limite";
+            this.end.Name = "end";
+            this.end.ReadOnly = true;
+            this.end.Width = 167;
+            // 
+            // delay
+            // 
+            this.delay.HeaderText = "Atraso";
+            this.delay.Name = "delay";
+            this.delay.ReadOnly = true;
+            // 
+            // value
+            // 
+            this.value.HeaderText = "Valor da multa";
+            this.value.Name = "value";
+            this.value.ReadOnly = true;
+            this.value.Width = 126;
             // 
             // F_SearchStudent
             // 
@@ -576,14 +578,14 @@ namespace My_Library
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Button btn_sair;
 		private System.Windows.Forms.Button btn_returnBook;
-		private System.Windows.Forms.DataGridViewTextBoxColumn title;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ibsn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn tombo;
-		private System.Windows.Forms.DataGridViewTextBoxColumn start;
-		private System.Windows.Forms.DataGridViewTextBoxColumn end;
-		private System.Windows.Forms.DataGridViewTextBoxColumn delay;
-		private System.Windows.Forms.DataGridViewTextBoxColumn value;
-		private System.Windows.Forms.Button btn_loan;
+		private System.Windows.Forms.Button btn_showLoan;
 		private System.Windows.Forms.Button btn_edit;
-	}
+        private System.Windows.Forms.DataGridViewTextBoxColumn title;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ibsn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tombo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn start;
+        private System.Windows.Forms.DataGridViewTextBoxColumn end;
+        private System.Windows.Forms.DataGridViewTextBoxColumn delay;
+        private System.Windows.Forms.DataGridViewTextBoxColumn value;
+    }
 }

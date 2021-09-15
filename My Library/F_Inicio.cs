@@ -46,8 +46,8 @@ namespace My_Library
             new F_Configs().ShowDialog();
         private void mi_logout_Click(object sender, EventArgs e)
         {
-            new F_Login().ShowDialog();
             this.Close();
+            new F_Login(Globals.autoCompleteUserName).ShowDialog();
             Globals.logado = false;
         }
 

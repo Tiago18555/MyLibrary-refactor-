@@ -39,7 +39,7 @@ namespace My_Library
 
 		//THEME
 		public static Color genericFontColor { get; set; }
-        public static Color titleFonteColor { get; set; }
+        public static Color titleFontColor { get; set; }
         public static Color genericBackgroundColor { get; set; }
         public static Color forecolorOK { get; set; }
         public static Color forecolorERR { get; set; }

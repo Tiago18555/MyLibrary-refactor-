@@ -14,7 +14,11 @@ namespace My_Library
     public partial class F_Login : Form
     {
         private byte passwordMinimunSize { get; set; } = 5;
-        public F_Login() => InitializeComponent();        
+        public F_Login(string? acl)
+        {
+            InitializeComponent();
+            tb_cpf.Text = acl == null ? "" : acl;
+        }
 
         private void F_Login_Load(object sender, EventArgs e)
         {

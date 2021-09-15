@@ -55,6 +55,7 @@ namespace My_Library
             this.lb_displayUser.Size = new System.Drawing.Size(73, 15);
             this.lb_displayUser.TabIndex = 0;
             this.lb_displayUser.Text = "BEM VINDO ";
+            this.lb_displayUser.ForeColor = Globals.genericFontColor;
             // 
             // menuStrip1
             // 
@@ -70,6 +71,8 @@ namespace My_Library
             this.menuStrip1.Size = new System.Drawing.Size(899, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ForeColor = Globals.genericFontColor;
+            this.menuStrip1.BackColor = Globals.genericBackgroundColor;
             // 
             // acervoToolStripMenuItem
             // 
@@ -80,6 +83,7 @@ namespace My_Library
             this.acervoToolStripMenuItem.Name = "acervoToolStripMenuItem";
             this.acervoToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.acervoToolStripMenuItem.Text = "A&cervo";
+            this.acervoToolStripMenuItem.BackColor = Globals.genericBackgroundColor;
             // 
             // mi_addBook
             // 
@@ -87,6 +91,8 @@ namespace My_Library
             this.mi_addBook.Size = new System.Drawing.Size(165, 22);
             this.mi_addBook.Text = "Adicionar livro";
             this.mi_addBook.Click += new System.EventHandler(this.mi_addBook_Click);
+            this.mi_addBook.ForeColor = Globals.genericFontColor;
+            this.mi_addBook.BackColor = Globals.genericBackgroundColor;
             // 
             // mi_addAuthor
             // 
@@ -94,6 +100,8 @@ namespace My_Library
             this.mi_addAuthor.Size = new System.Drawing.Size(165, 22);
             this.mi_addAuthor.Text = "Adicionar autor";
             this.mi_addAuthor.Click += new System.EventHandler(this.mi_addAuthor_Click);
+            this.mi_addAuthor.ForeColor = Globals.genericFontColor;
+            this.mi_addAuthor.BackColor = Globals.genericBackgroundColor;
             // 
             // mi_addPublisher
             // 
@@ -101,6 +109,8 @@ namespace My_Library
             this.mi_addPublisher.Size = new System.Drawing.Size(165, 22);
             this.mi_addPublisher.Text = "Adicionar editora";
             this.mi_addPublisher.Click += new System.EventHandler(this.mi_addPublisher_Click);
+            this.mi_addPublisher.ForeColor = Globals.genericFontColor;
+            this.mi_addPublisher.BackColor = Globals.genericBackgroundColor;
             // 
             // alunosToolStripMenuItem
             // 
@@ -110,6 +120,7 @@ namespace My_Library
             this.alunosToolStripMenuItem.Name = "alunosToolStripMenuItem";
             this.alunosToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.alunosToolStripMenuItem.Text = "&Alunos";
+            this.alunosToolStripMenuItem.BackColor = Globals.genericBackgroundColor;
             // 
             // mi_newStudent
             // 
@@ -117,6 +128,8 @@ namespace My_Library
             this.mi_newStudent.Size = new System.Drawing.Size(180, 22);
             this.mi_newStudent.Text = "Novo";
             this.mi_newStudent.Click += new System.EventHandler(this.mi_newStudent_Click);
+            this.mi_newStudent.ForeColor = Globals.genericFontColor;
+            this.mi_newStudent.BackColor = Globals.genericBackgroundColor;
             // 
             // mi_searchStudent
             // 
@@ -124,6 +137,8 @@ namespace My_Library
             this.mi_searchStudent.Size = new System.Drawing.Size(180, 22);
             this.mi_searchStudent.Text = "Consulta";
             this.mi_searchStudent.Click += new System.EventHandler(this.mi_searchStudent_Click);
+            this.mi_searchStudent.ForeColor = Globals.genericFontColor;
+            this.mi_searchStudent.BackColor = Globals.genericBackgroundColor;
             // 
             // funcionáriosToolStripMenuItem
             // 
@@ -133,6 +148,7 @@ namespace My_Library
             this.funcionáriosToolStripMenuItem.Name = "funcionáriosToolStripMenuItem";
             this.funcionáriosToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
             this.funcionáriosToolStripMenuItem.Text = "&Funcionários";
+            this.funcionáriosToolStripMenuItem.BackColor = Globals.genericBackgroundColor;
             // 
             // mi_newEmployee
             // 
@@ -140,6 +156,8 @@ namespace My_Library
             this.mi_newEmployee.Size = new System.Drawing.Size(180, 22);
             this.mi_newEmployee.Text = "Novo";
             this.mi_newEmployee.Click += new System.EventHandler(this.mi_newEmployee_Click);
+            this.mi_newEmployee.ForeColor = Globals.genericFontColor;
+            this.mi_newEmployee.BackColor = Globals.genericBackgroundColor;
             // 
             // mi_searchEmployee
             // 
@@ -147,6 +165,8 @@ namespace My_Library
             this.mi_searchEmployee.Size = new System.Drawing.Size(180, 22);
             this.mi_searchEmployee.Text = "Consulta";
             this.mi_searchEmployee.Click += new System.EventHandler(this.mi_searchEmployee_Click);
+            this.mi_searchEmployee.ForeColor = Globals.genericFontColor;
+            this.mi_searchEmployee.BackColor = Globals.genericBackgroundColor;
             // 
             // mi_about
             // 
@@ -154,6 +174,8 @@ namespace My_Library
             this.mi_about.Size = new System.Drawing.Size(49, 20);
             this.mi_about.Text = "&Sobre";
             this.mi_about.Click += new System.EventHandler(this.mi_about_Click);
+            this.mi_about.ForeColor = Globals.genericFontColor;
+            this.mi_about.BackColor = Globals.genericBackgroundColor;
             // 
             // mi_logout
             // 
@@ -161,6 +183,8 @@ namespace My_Library
             this.mi_logout.Size = new System.Drawing.Size(57, 20);
             this.mi_logout.Text = "&Logout";
             this.mi_logout.Click += new System.EventHandler(this.mi_logout_Click);
+            this.mi_logout.ForeColor = Globals.genericFontColor;
+            this.mi_logout.BackColor = Globals.genericBackgroundColor;
             // 
             // mi_configs
             // 
@@ -168,6 +192,8 @@ namespace My_Library
             this.mi_configs.Size = new System.Drawing.Size(91, 20);
             this.mi_configs.Text = "&Configuração";
             this.mi_configs.Click += new System.EventHandler(this.mi_configs_Click);
+            this.mi_configs.ForeColor = Globals.genericFontColor;
+            this.mi_configs.BackColor = Globals.genericBackgroundColor;
             // 
             // F_Inicio
             // 
@@ -188,6 +214,7 @@ namespace My_Library
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
+            this.BackColor = Globals.genericBackgroundColor;
 
         }
 
